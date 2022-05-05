@@ -1,0 +1,17 @@
+{% extends './base.html' %}
+
+{% block content %}
+
+<h1>What's in my store?</h1>
+
+<hr>
+
+{% for skin in data %}
+
+    <h2>{{ skin.displayName }}</h2>
+
+    <img class="mb-4" src="{{ skin.displayIcon }}" alt="{{ skin.displayName }}">
+
+{% endfor %}
+
+{% endblock %}

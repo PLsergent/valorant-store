@@ -1,0 +1,26 @@
+{% extends './base.html' %}
+
+{% block content %}
+
+<h1>What's in my store?</h1>
+
+<div class="card mt-4">
+  <div class="card-body">
+    <form method="post">
+        <div class="mb-3">
+            <label for="rusername" class="form-label">Riot username</label>
+            <input type="text" name="rusername" class="form-control"></input>
+            <div id="rusernameHelp" class="form-text">The one used to login.</div>
+        </div>
+        <div class="mb-3">
+            <label for="pswd" class="form-label">Password</label>
+            <input type="password" name="pswd" class="form-control">
+            <div id="pswdHelp" class="form-text">Riot password, not stored by the website.</div>
+        </div>
+
+        <button type="submit" class="btn btn-dark">Submit</button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}
