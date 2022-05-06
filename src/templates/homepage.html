@@ -2,25 +2,31 @@
 
 {% block content %}
 
-<h1>What's in my store?</h1>
+<h1>What's in my store? <img width="40px" src="{{ url_for('static', filename='store.png') }}"></img></h1>
 
-<div class="card mt-4">
-  <div class="card-body">
-    <form method="post">
-        <div class="mb-3">
-            <label for="rusername" class="form-label">Riot username</label>
-            <input type="text" name="rusername" class="form-control"></input>
-            <div id="rusernameHelp" class="form-text">The one you use to login.</div>
-        </div>
-        <div class="mb-3">
-            <label for="pswd" class="form-label">Password</label>
-            <input type="password" name="pswd" class="form-control">
-            <div id="pswdHelp" class="form-text">Riot password, trust me it's okay.</div>
-        </div>
-
-        <button type="submit" class="btn btn-dark">Submit</button>
-    </form>
+<div class="row">
+  <div class="col-lg-4"></div>
+  <div class="col-lg-4">
+    <div class="card mt-5 shadow">
+      <div class="card-body">
+        <form method="post">
+            <div class="mb-3">
+                <label for="rusername" class="form-label">Riot username</label>
+                <input type="text" name="rusername" class="form-control"></input>
+                <div id="rusernameHelp" class="form-text">The one you use to login.</div>
+            </div>
+            <div class="mb-3">
+                <label for="pswd" class="form-label">Password</label>
+                <input type="password" name="pswd" class="form-control">
+                <div id="pswdHelp" class="form-text">Riot password, trust me it's okay.</div>
+            </div>
+    
+            <button type="submit" class="btn btn-dark">Submit</button>
+        </form>
+      </div>
+    </div>
   </div>
+  <div class="col-lg-4"></div>
 </div>
 
 {% endblock %}

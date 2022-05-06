@@ -10,14 +10,25 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
-<body>
-    <nav class="navbar navbar-light bg-light">
+<body class="d-flex flex-column h-100" style="background-color: #cbc7fa">
+    <nav class="navbar navbar-light bg-light mb-4">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/">Valstore</a>
+            <a class="navbar-brand" href="/">Valorant store <img width="30px" src="{{ url_for('static', filename='gun.png') }}"></img></a>
         </div>
     </nav>
-    <div class="container">
-        {% block content %}{% endblock %}
-    </div>
+    <main class="flex-shrink-0">
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <footer class="footer mt-auto py-3 bg-light fixed-bottom">
+        <span class="text-muted fw-bold mx-3">
+            <a class="text-decoration-none" href="https://github.com/PLsergent/valorant-store">
+                @plsergent
+                <img width="20px" src="{{ url_for('static', filename='github.png') }}">
+            </a>
+        </span>
+    </footer>
 </body>
 </html>
