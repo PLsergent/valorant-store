@@ -21,7 +21,7 @@ def store_homepage():
         session["RIOT_PASSWORD"] = request.form["pswd"]
         return redirect(url_for("store.store_profile"))
 
-    return render_template('homepage.html')
+    return render_template("homepage.html")
 
 
 @bp.route("/store", methods=("GET", "POST"))

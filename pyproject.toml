@@ -9,6 +9,7 @@ python = "^3.9"
 Flask = "^2.1.2"
 python-dotenv = "^0.20.0"
 aiohttp = "^3.8.1"
+Flask-Session = "^0.4.0"
 
 [tool.poetry.dev-dependencies]
 
