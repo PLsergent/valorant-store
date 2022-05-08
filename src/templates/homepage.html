@@ -19,6 +19,13 @@
                 <label for="pswd" class="form-label">Password</label>
                 <input type="password" name="pswd" class="form-control">
                 <div id="pswdHelp" class="form-text">Riot password, trust me it's okay.</div>
+                {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                    {% for message in messages %}
+                      <span class="badge bg-danger mb-3">{{ message }}</span>
+                    {% endfor %}
+                  {% endif %}
+                {% endwith %}
             </div>
     
             <button type="submit" class="btn btn-dark">Submit</button>

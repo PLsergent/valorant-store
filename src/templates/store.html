@@ -2,17 +2,24 @@
 
 {% block content %}
 
-<h1>What's in my store?</h1>
+<style type="text/css">
+    img.img-fluid {
+        object-fit: contain; height: 300px !important; width: 533px !important
+    }
+</style>
 
-<hr>
+<h1>What's in my store? <a  href="/" class="btn btn-sm btn-secondary">back</a></h1>
 
-{% for skin in data %}
+<hr class="mb-4">
 
-    <h2>{{ skin.displayName }}</h2>
-
-    <img class="mb-4 img-fluid" src="{{ skin.displayIcon }}" alt="{{ skin.displayName }}">
-
-{% endfor %}
+<div class="row">
+    {% for skin in data %}
+        <div class="col-md-6">
+            <h2>{{ skin.displayName }}</h2>
+            <img class="mb-4 img-fluid" src="{{ skin.displayIcon }}" alt="{{ skin.displayName }}">
+        </div>
+    {% endfor %}
+</div>
 
 <br>
 <br>

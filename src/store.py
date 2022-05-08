@@ -3,6 +3,7 @@ import os
 import functools
 
 import re
+from this import d
 import aiohttp
 import asyncio
 import json
@@ -26,7 +27,12 @@ def store_homepage():
 
 @bp.route("/store", methods=("GET", "POST"))
 def store_profile():
-    skins_data =  asyncio.run(run())
+    skins_data = asyncio.run(run())
+
+    if skins_data == "auth_failure":
+        flash("Authentication failed. Please try again.")
+        return redirect(url_for("store.store_homepage"))
+        
     return render_template('store.html', data=skins_data)
 
 
@@ -53,6 +59,10 @@ async def run():
     async with riot_session.put('https://auth.riotgames.com/api/v1/authorization', json=data, headers=headers) as r:
         data = await r.json()
 
+    if "error" in data.keys():
+        await riot_session.close()
+        return data["error"]
+    
     pattern = re.compile('access_token=((?:[a-zA-Z]|\d|\.|-|_)*).*id_token=((?:[a-zA-Z]|\d|\.|-|_)*).*expires_in=(\d*)')
     data = pattern.findall(data['response']['parameters']['uri'])[0]
     access_token = data[0]
