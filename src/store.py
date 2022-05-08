@@ -1,15 +1,10 @@
-from crypt import methods
-import os
-import functools
-
 import re
-from this import d
 import aiohttp
 import asyncio
 import json
 
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, session, url_for
+    Blueprint, flash, redirect, render_template, request, session, url_for
 )
 
 bp = Blueprint('store', __name__, url_prefix='/')
@@ -27,16 +22,20 @@ def store_homepage():
 
 @bp.route("/store", methods=("GET", "POST"))
 def store_profile():
-    skins_data = asyncio.run(run())
+    skins_data = asyncio.run(get_skins_from_api())
 
     if skins_data == "auth_failure":
         flash("Authentication failed. Please try again.")
+        return redirect(url_for("store.store_homepage"))
+    
+    if skins_data == "error":
+        flash("An error occurred. Please try again later.")
         return redirect(url_for("store.store_homepage"))
         
     return render_template('store.html', data=skins_data)
 
 
-async def run():
+async def get_skins_from_api():
     riot_session = aiohttp.ClientSession()
     user_agent = "RiotClient/43.0.1.4195386.4190634 rso-auth (Windows; 10;;Professional, x64)"
     data = {
@@ -59,6 +58,7 @@ async def run():
     async with riot_session.put('https://auth.riotgames.com/api/v1/authorization', json=data, headers=headers) as r:
         data = await r.json()
 
+    # Handle user authentication failure
     if "error" in data.keys():
         await riot_session.close()
         return data["error"]
@@ -81,16 +81,20 @@ async def run():
     user_id = data['sub']
     
     # Request
-    async with riot_session.get(f'https://pd.EU.a.pvp.net/store/v2/storefront/{user_id}', headers=headers) as r:
-        data = json.loads(await r.text())
+    try:
+        async with riot_session.get(f'https://pd.EU.a.pvp.net/store/v2/storefront/{user_id}', headers=headers) as r:
+            data = json.loads(await r.text())
 
-    data_store = data["SkinsPanelLayout"]["SingleItemOffers"]
+        data_store = data["SkinsPanelLayout"]["SingleItemOffers"]
 
-    skins_data = []
+        skins_data = []
 
-    for skin in data_store:
-        async with riot_session.get(f"https://valorant-api.com/v1/weapons/skinlevels/{skin}") as r:
-            skins_data.append(json.loads(await r.text())["data"])
+        for skin in data_store:
+            async with riot_session.get(f"https://valorant-api.com/v1/weapons/skinlevels/{skin}") as r:
+                skins_data.append(json.loads(await r.text())["data"])
+    except Exception as e:
+        print(e)
+        return "error"
 
     await riot_session.close()
 

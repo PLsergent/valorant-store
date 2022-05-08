@@ -18,3 +18,5 @@ poetry run flask run
 ## Disclaimer
 
 This app requires the user riot account credentials to work. Even though the creds are stored securely, they'll be read in plain-text by the program, when sending the request to get the tokens from the riot api endpoint. Therefore there is always a risk that the credentials could be exposed. That's why **I recommend to run the app locally only.**
+
+The apis used for the app are **not official** and are not maintained by Riot Games.
