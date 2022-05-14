@@ -15,7 +15,13 @@
 <div class="row">
     {% for skin in data %}
         <div class="col-md-6">
-            <h2>{{ skin.displayName }}</h2>
+            <h2 class="d-inline">{{ skin.displayName }}</h2>
+            <h4 class="mx-4 d-inline">
+                <span class="badge bg-dark text-light d-inline">
+                    {{ skin.price }}
+                    <img class="py-2" width="25px" src="{{ url_for('static', filename='vp-logo.png') }}" style="align-items: center;">
+                </span>
+            </h4>
             <img class="mb-4 img-fluid" src="{{ skin.displayIcon }}" alt="{{ skin.displayName }}">
         </div>
     {% endfor %}
