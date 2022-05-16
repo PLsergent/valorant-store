@@ -1,0 +1,24 @@
+name: Deploy latest version
+on: [push]
+jobs:
+  build:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: Executing remote ssh commands
+      uses: garygrossgarten/github-action-ssh@release
+      with:
+        command: |
+          cd valorant-store
+          git config --global user.email "papa.louis59@gmail.com"
+          git config --global user.name "Pierre-Louis Sergent"
+          git pull
+          docker stop valstore_app
+          docker rm valstore_app
+          docker image rm valstore
+          docker build -t valstore .
+          docker run -d -p 5000:5000 --name valstore_app valstore
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        passphrase: ${{ secrets.PASSWORD }}
+        privateKey: ${{ secrets.KEY }}
