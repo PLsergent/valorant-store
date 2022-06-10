@@ -1,6 +1,7 @@
 import aiohttp
 import json
 import re
+import sys
 
 from flask import session
 
@@ -8,7 +9,7 @@ from flask import session
 async def get_skins_from_api():
     try:
         riot_session = aiohttp.ClientSession()
-        user_agent = "RiotClient/43.0.1.4195386.4190634 rso-auth (Windows; 10;;Professional, x64)"
+        user_agent = "RiotClient/51.0.0.4429735.4381201 rso-auth (Windows;10;;Professional, x64)"
         data = {
             'client_id': 'play-valorant-web-prod',
             'nonce': '1',

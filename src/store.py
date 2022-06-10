@@ -1,4 +1,5 @@
 import asyncio
+import sys
 
 from flask import (
     Blueprint, flash, redirect, render_template, request, session, url_for
@@ -28,7 +29,7 @@ def store_profile():
         flash("Authentication failed. Please try again.")
         return redirect(url_for("store.store_homepage"))
     
-    if skins_data == "error":
+    if skins_data in ("error", "invalid_session_id"):
         flash("An error occurred. Please try again later.")
         return redirect(url_for("store.store_homepage"))
         
