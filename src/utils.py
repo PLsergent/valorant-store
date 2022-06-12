@@ -1,14 +1,23 @@
 import aiohttp
 import json
 import re
-import sys
+import ssl
 
 from flask import session
+from multidict import MultiDict
 
 
 async def get_skins_from_api():
     try:
-        riot_session = aiohttp.ClientSession()
+        ctx = ssl.create_default_context(ssl.Purpose.SERVER_AUTH)
+        ctx.set_ciphers("DEFAULT@SECLEVEL=1")
+        conn = aiohttp.TCPConnector(ssl=ctx)
+
+        riot_session = aiohttp.ClientSession(connector=conn, headers=MultiDict({
+            "Accept-Language": "en-US,en;q=0.9",
+            "Accept": "application/json, text/plain, */*"
+        }))
+        
         user_agent = "RiotClient/51.0.0.4429735.4381201 rso-auth (Windows;10;;Professional, x64)"
         data = {
             'client_id': 'play-valorant-web-prod',
